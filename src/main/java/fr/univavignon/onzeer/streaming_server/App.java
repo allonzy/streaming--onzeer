@@ -1,11 +1,11 @@
 package fr.univavignon.onzeer.streaming_server;
 
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Properties;
 
 import javax.jms.*;
 import javax.naming.Context;
@@ -35,10 +35,12 @@ public class App
 			//streamer.end();/**/
 		/*}
 		/**/
-		initializeConnection("jms/myConnectionFactory","jms/myQueue");
+		/*initializeConnection("jms/myConnectionFactory","jms/myQueue");
 		receiver = session.createReceiver(queue);
-		System.out.println("Serveur en attente de message");
-		while(true){
+		System.out.println("Serveur en attente de message");/**/
+		Streamer streamer = new Streamer();
+
+		/*while(true){
             Thread.sleep(refreshTime);
             TextMessage message =  catchTextMessage();
             if(message != null){
@@ -47,19 +49,23 @@ public class App
     				File fileToStream = FileIndexer.getFileByName(fileName);
     				System.out.println(fileToStream);
     				if(fileToStream != null){
-    					Streamer streamer = new Streamer();
     					callBack(message,streamer.getStreamingURL());
     					streamer.play(Collections.singleton(fileToStream));
     					System.out.println("streaming en cours sur "+streamer.getStreamingURL());
     				}
-            }
+    			}
 			}
 		}/**/
 	}
 	public static void initializeConnection(String connectionFactoryName,String queueName) throws JMSException, NamingException{
 
 		//Context context = new InitialContext(env);
-		InitialContext context = new InitialContext();
+		Properties props = new Properties();
+		//props.setProperty("org.omg.CORBA.ORBInitialHost", "localhost"); // default!
+		//props.setProperty("org.omg.CORBA.ORBInitialPort", "4848"); // default!
+
+        InitialContext context = new InitialContext(props);
+        context.addToEnvironment("port","4848");
 		QueueConnectionFactory connectionFactory = (QueueConnectionFactory)
 		context.lookup(connectionFactoryName);
 		queue = (Queue) context.lookup(queueName);

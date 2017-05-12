@@ -15,7 +15,11 @@
   </properties>
 
   <dependencies>
-  
+  <dependency>
+    	<groupId>net.java.dev.jna</groupId>
+	  <artifactId>jna</artifactId>
+	  <version>4.0.0</version>
+  </dependency>
   	<dependency>
 	    <groupId>uk.co.caprica</groupId>
 	    <artifactId>vlcj</artifactId>
@@ -32,6 +36,7 @@
 	    <artifactId>appserv-rt</artifactId>
 	    <version>3.1.1</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.github.axet.play/libvlc -->
 		
 	<dependency>
 		<groupId>javax.persistence</groupId>

@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Set;
 
+import com.sun.jna.NativeLibrary;
 
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -28,6 +29,8 @@ public class Streamer{
 			e.printStackTrace();
 		}
 		port = sock.getLocalPort();/**/
+		System.setProperty("jna.library.path", "/usr/lib/");
+
 		mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();
 	}
 	public String getStreamingURL(){
@@ -40,7 +43,7 @@ public class Streamer{
 	public void play(Set<File> files) throws FileNotFoundException{	
 		//option = "sout=#transcode{access=udp,mux=ts,dst="+LOCAL_URL+",port=" + port + "}";
 		for (File file : files){
-			option =/*"#transcode{acodec=mp3,ab=128,mux=ogg}:"
+			option ="#transcode{acodec=mp3,ab=128,mux=ogg}:"
 					+ "http{dst=:"+port+"/"+file.getName()+"}";/**/
 			streamingUrl = SERVER_URL+":"+port+"/"+file.getName();
 			mediaPlayer.prepareMedia(file.getAbsolutePath());
